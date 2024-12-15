@@ -20,9 +20,9 @@ func addImageView(radius: CGFloat) -> UIImageView {
     return imageView
 }
 
-func addLabel(text: String, textColor: UIColor = .black, font: UIFont) -> UILabel {
+func addLabel(text: String, textColor: UIColor = .black, font: UIFont, numberOfLines: Int = 0) -> UILabel {
     let label = UILabel()
-    label.numberOfLines = 0
+    label.numberOfLines = numberOfLines
     label.textAlignment = .left
     label.translatesAutoresizingMaskIntoConstraints = false
     label.font = font
