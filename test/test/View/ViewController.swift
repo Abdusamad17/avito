@@ -9,6 +9,10 @@ protocol ViewOutput {
 }
 
 class ViewController: UIViewController, ViewInput {
+    var selectedIndex: IndexPath?
+    var selectedIndexLabelMainTitle: String?
+    var selectedIndexLabelDescription: String?
+    
     var informationForShow = Information(status: "status0",
                                          title: "title0",
                                          actionTitle: "actionTitle0",
@@ -38,25 +42,32 @@ class ViewController: UIViewController, ViewInput {
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 0
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        $0.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        $0.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         
         $0.backgroundColor = .white
         $0.dataSource = self
+        $0.delegate = self
         $0.register(Cell.self, forCellWithReuseIdentifier: Cell.identifier)
         
         return $0
     }(UICollectionView(frame: CGRect(x: 0, y: Int(labelMainTitle.frame.maxY) + 40, width: Int(view.frame.size.width), height: Int(view.frame.size.height) - 200), collectionViewLayout: UICollectionViewFlowLayout()))
     
     lazy var buttonChoose = {
+        $0.addTarget(self, action: #selector(buttonChooseTapped), for: .touchUpInside)
         $0.backgroundColor = .blue
 //        $0.setTitle(informationForShow.selectedActionTitle, for: .normal)
         $0.setTitle("Выбрать", for: .normal)
         $0.setTitleColor(.white, for: .normal)
         $0.layer.cornerRadius = 10
         return $0
-    }(UIButton(frame: CGRect(x: 10, y: view.frame.maxY - 80, width: view.frame.width - 20, height: 50), primaryAction: UIAction{_ in
-        //...
-    }))
+    }(UIButton(frame: CGRect(x: 10, y: view.frame.maxY - 80, width: view.frame.width - 20, height: 50)))
+    
+    @objc private func buttonChooseTapped() {
+        let alert = UIAlertController(title: selectedIndexLabelMainTitle, message: selectedIndexLabelDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
