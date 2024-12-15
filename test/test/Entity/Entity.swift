@@ -7,16 +7,16 @@ struct Information {
     var actionTitle: String
     var selectedActionTitle: String
     static var list: [CellData] = [CellData(id: "id1",
-                                    title: "title1",
-                                    description: "description1",
-                                    icon: "icon1",
-                                    price: "price1",
+                                    title: "XL-объявление",
+                                    description: "Пользователи смогут посмотреть фотографии, описание и телефон прям из результатов поиска.",
+                                    icon: "XL",
+                                    price: "356 Р",
                                     isSelected: false),
                                    CellData(id: "id2",
-                                    title: "title2",
-                                    description: "description2",
-                                    icon: "icon2",
-                                    price: "price2",
+                                    title: "Выделить цветом",
+                                    description: "Яркий цвет не даст затеряться среди других объявлений.",
+                                    icon: "highlight",
+                                    price: "299 Р",
                                     isSelected: false)]
 }
 
