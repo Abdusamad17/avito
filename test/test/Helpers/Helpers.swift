@@ -20,14 +20,32 @@ func addImageView(radius: CGFloat) -> UIImageView {
     return imageView
 }
 
-func addLabel(text: String, textColor: UIColor = .black, font: UIFont, numberOfLines: Int = 0) -> UILabel {
+func addLabel(frame: CGRect, text: String, textColor: UIColor = .black, font: UIFont, numberOfLines: Int = 0) -> UILabel {
     let label = UILabel()
+    label.frame = frame
     label.numberOfLines = numberOfLines
     label.textAlignment = .left
-    label.translatesAutoresizingMaskIntoConstraints = false
     label.font = font
     label.textColor = textColor
     label.backgroundColor = .clear
     label.text = text
     return label
+}
+
+func addLabelConstrains(text: String, font: UIFont) -> UILabel {
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.numberOfLines = 0
+    label.textAlignment = .left
+    label.font = font
+    label.textColor = .black
+    label.backgroundColor = .clear
+    label.text = text
+    return label
+}
+
+func addViews(_ views: UIView..., view: UIView) {
+    views.forEach({
+        view.addSubview($0)
+    })
 }

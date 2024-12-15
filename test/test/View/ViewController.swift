@@ -13,6 +13,7 @@ class ViewController: UIViewController, ViewInput {
                                          title: "title0",
                                          actionTitle: "actionTitle0",
                                          selectedActionTitle: "selectedActionTitle0")
+    
     var dataForShow = Information.list
     var output: ViewOutput?
     
@@ -24,7 +25,8 @@ class ViewController: UIViewController, ViewInput {
         return $0
     }(UIButton(frame: CGRect(x: 10, y: 50, width: 50, height: 50)))
     
-    lazy var labelMainTitle = addLabel(text: informationForShow.title,
+    lazy var labelMainTitle = addLabel(frame: CGRect(x: 10, y: 100, width: view.frame.width-20, height: 100),
+                                       text: informationForShow.title,
                                        //text: "Сделайте объявление заметнее на 7 дней",
                                        font: UIFont.systemFont(ofSize: 30, weight: .bold),
                                        numberOfLines: 2)
@@ -53,51 +55,12 @@ class ViewController: UIViewController, ViewInput {
         $0.layer.cornerRadius = 10
         return $0
     }(UIButton(frame: CGRect(x: 10, y: view.frame.maxY - 80, width: view.frame.width - 20, height: 50), primaryAction: UIAction{_ in
-        
+        //...
     }))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        view.addSubview(collection)
-        view.addSubview(buttonX)
-        view.addSubview(labelMainTitle)
-        view.addSubview(buttonChoose)
-        setUpConstrains()
-    }
-    
-    func setUpConstrains() {
-        NSLayoutConstraint.activate([
-            labelMainTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: buttonX.frame.minY + 50),
-            labelMainTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            labelMainTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            labelMainTitle.heightAnchor.constraint(equalToConstant: 100),
-            
-        ])
-    }
-    
-}
-
-extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataForShow.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as? Cell else {return UICollectionViewCell()}
-        cell.setUp(data: dataForShow[indexPath.item])
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //показать или скрыть галочку
-    }
-}
-
-class Cell: UICollectionViewCell {
-    static let identifier = "Cell"
-    
-    func setUp(data: CellData) {
-        
+        addViews(buttonX, labelMainTitle, buttonChoose, collection, view: self.view)
     }
 }
