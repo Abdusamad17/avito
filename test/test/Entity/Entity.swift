@@ -6,7 +6,7 @@ struct Information {
     var title: String
     var actionTitle: String
     var selectedActionTitle: String
-    static var list: [CellData] = [CellData(id: "id1",
+    var list: [CellData] = [CellData(id: "id1",
                                     title: "XL-объявление",
                                     description: "Пользователи смогут посмотреть фотографии, описание и телефон прям из результатов поиска.",
                                     icon: "XL",

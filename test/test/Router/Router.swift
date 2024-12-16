@@ -3,6 +3,4 @@ import Foundation
 
 protocol RouterInput {}
 
-final class Router {
-    
-}
+final class Router {}

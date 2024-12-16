@@ -2,7 +2,7 @@ import UIKit
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataForShow.count
+        dataForShow?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -10,7 +10,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
             return UICollectionViewCell()
         }
         
-        cell.setUp(data: dataForShow[indexPath.item], viewWidth: Int(view.frame.width))
+        cell.setUp(data: dataForShow?[indexPath.item] ?? CellData(id: "", title: "", description: "", icon: "", price: "", isSelected: false), viewWidth: Int(view.frame.width))
         
         if indexPath == selectedIndex {
             cell.showImageViewCheck()

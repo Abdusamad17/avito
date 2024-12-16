@@ -4,22 +4,19 @@ protocol ViewInput {
     var output: ViewOutput? { get set }
 }
 
-protocol ViewOutput {
-    func buttonChooseTapped(button: UIButton)
+protocol ViewOutput: AnyObject {
+    func getDataFromURL()->Information?///TODO: данные с JSON
 }
 
 class ViewController: UIViewController, ViewInput {
+    weak var output: ViewOutput?
+    
     var selectedIndex: IndexPath?
     var selectedIndexLabelMainTitle: String?
     var selectedIndexLabelDescription: String?
     
-    var informationForShow = Information(status: "status0",
-                                         title: "title0",
-                                         actionTitle: "actionTitle0",
-                                         selectedActionTitle: "selectedActionTitle0")
-    
-    var dataForShow = Information.list
-    var output: ViewOutput?
+    lazy var informationForShow = output?.getDataFromURL()
+    lazy var dataForShow = informationForShow?.list
     
     lazy var buttonX = {
         $0.tintColor = .black
