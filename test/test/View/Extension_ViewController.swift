@@ -10,7 +10,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
             return UICollectionViewCell()
         }
         
-        cell.setUp(data: dataForShow?[indexPath.item] ?? CellData(id: "", title: "", description: "", icon: "", price: "", isSelected: false), viewWidth: Int(view.frame.width))
+        cell.setUp(dataForSetUp: dataForShow?[indexPath.item] ?? CellData(id: "", title: "", description: "", icon: Icon(x52: ""), price: "", isSelected: false), viewWidth: Int(view.frame.width))
         
         if indexPath == selectedIndex {
             cell.showImageViewCheck()

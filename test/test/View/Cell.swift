@@ -40,13 +40,31 @@ class Cell: UICollectionViewCell {
         imageViewCheck.isHidden = true
     }
     
-    func setUp(data: CellData, viewWidth: Int) {
-        labelMainTitle.text = data.title
-        labelDescription.text = data.description
-        labelPrice.text = data.price
-        imageViewAvatarka.image = UIImage(named: data.icon)
+    func setUp(dataForSetUp: CellData, viewWidth: Int) {
+        labelMainTitle.text = dataForSetUp.title
+        labelDescription.text = dataForSetUp.description
+        labelPrice.text = dataForSetUp.price
+        setUpImageViewAvatarka(named: dataForSetUp.icon.x52)
+//        imageViewAvatarka.image = UIImage(named: dataForSetUp.icon.x52)
         setUpConstrains()
         labelMainTitle.widthAnchor.constraint(equalToConstant: CGFloat(viewWidth - 160)).isActive = true
+    }
+    
+    private func setUpImageViewAvatarka(named name: String) {
+        if let url = URL(string: name) {
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let error = error {
+                    print("Ошибка загрузки изображения: \(error)")
+                    return
+                }
+                
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.imageViewAvatarka.image = image
+                    }
+                }
+            }.resume()
+        }
     }
     
     func hiddenImageViewCheck() {
@@ -96,4 +114,3 @@ class Cell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

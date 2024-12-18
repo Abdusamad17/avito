@@ -1,32 +1,28 @@
 import UIKit
 import Foundation
 
-struct Information {
+struct Information: Decodable {
     var status: String
+    var result: Result
+}
+
+struct Result: Decodable {
     var title: String
     var actionTitle: String
     var selectedActionTitle: String
-    var list: [CellData] = [CellData(id: "id1",
-                                    title: "XL-объявление",
-                                    description: "Пользователи смогут посмотреть фотографии, описание и телефон прям из результатов поиска.",
-                                    icon: "XL",
-                                    price: "356 Р",
-                                    isSelected: false),
-                                   CellData(id: "id2",
-                                    title: "Выделить цветом",
-                                    description: "Яркий цвет не даст затеряться среди других объявлений.",
-                                    icon: "highlight",
-                                    price: "299 Р",
-                                    isSelected: false)]
+    var list: [CellData]
 }
 
-struct CellData {
+struct CellData: Decodable {
     var id: String
     var title: String
     var description: String
-    var icon: String
+    var icon: Icon
     var price: String
     var isSelected: Bool
 }
 
+struct Icon: Decodable {
+    var x52: String
+}
 

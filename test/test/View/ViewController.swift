@@ -16,7 +16,7 @@ class ViewController: UIViewController, ViewInput {
     var selectedIndexLabelDescription: String?
     
     lazy var informationForShow = output?.getDataFromURL()
-    lazy var dataForShow = informationForShow?.list
+    lazy var dataForShow = informationForShow?.result.list
     
     lazy var buttonX = {
         $0.tintColor = .black
