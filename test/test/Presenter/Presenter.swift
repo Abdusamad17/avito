@@ -1,22 +1,22 @@
 import UIKit
 import Foundation
 
-protocol PresenterInput {
-    var output: PresenterOutput? { get set }
+protocol AdModulePresenterInput {
+    var output: AdModulePresenterOutput? { get set }
 }
 
-protocol PresenterOutput: AnyObject {
+protocol AdModulePresenterOutput: AnyObject {
     
 }
 
-final class Presenter: PresenterInput {
-    weak var output: PresenterOutput?
+final class AdModulePresenter: AdModulePresenterInput {
+    weak var output: AdModulePresenterOutput?
     
     private let router: Router
-    private let interactor: Interactor
+    private let interactor: AdModuleInteractor
     private let view: ViewController
     
-    init(router: Router, interactor: Interactor, view: ViewController) {
+    init(router: Router, interactor: AdModuleInteractor, view: ViewController) {
         self.router = router
         self.interactor = interactor
         self.view = view
@@ -24,14 +24,18 @@ final class Presenter: PresenterInput {
     
 }
 
-extension Presenter: ViewOutput {
-    func getDataFromURL() -> Information? {
-        return self.sendInformation()
+extension AdModulePresenter: ViewOutput {
+    func presentView(forView: UIViewController) {
+        router.presentEmptyViewController(viewController: forView)
+    }
+    
+    func getDataFromURL() -> AdResponse? {
+        return self.send()
     }
 }
 
-extension Presenter: InteractorOutput {
-    func sendInformation() -> Information? {
-        return interactor.getInformation()
+extension AdModulePresenter: AdModuleInteractorOutput {
+    func send() -> AdResponse? {
+        return interactor.load()
     }
 }

@@ -1,22 +1,37 @@
 import UIKit
 
-class Cell: UICollectionViewCell {
-    static var identifier = "Cell"
+class AdCell: UICollectionViewCell {
     
-    private lazy var labelMainTitle = addLabelConstrains(text: "",
-                                                         font: UIFont.systemFont(ofSize: 23, weight: .bold))
+    lazy var mainTitleLabel = UILabel.addLabel(
+        frame: .zero,
+        text: AdCell.Constants.emptyString,
+        font: AdCell.Constants.fontLabelMainTitle,
+        TAMIC: false
+    )
     
-    func getLabelMainTitle()->String? {return labelMainTitle.text}
+    func getMainTitleLabel() -> String? {
+        return mainTitleLabel.text
+    }
     
-    private lazy var labelDescription = addLabelConstrains(text: "",
-                                                           font: UIFont.systemFont(ofSize: 16))
+    lazy var descriptionLabel = UILabel.addLabel(
+        frame: .zero,
+        text: AdCell.Constants.emptyString,
+        font: AdCell.Constants.fontLabelDescription,
+        TAMIC: false
+    )
     
-    func getLabelDescription()->String? {return labelDescription.text}
+    func getDescriptionLabel() -> String? {
+        return descriptionLabel.text
+    }
     
-    private lazy var labelPrice = addLabelConstrains(text: "",
-                                                         font: UIFont.systemFont(ofSize: 18, weight: .bold))
+    private lazy var priceLabel = UILabel.addLabel(
+        frame: .zero,
+        text: AdCell.Constants.emptyString,
+        font: AdCell.Constants.fontLabelPrice,
+        TAMIC: false
+    )
     
-    private lazy var imageViewCheck: UIImageView = {
+    private lazy var checkImageView: UIImageView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.image = UIImage(systemName: "checkmark.circle.fill")
         $0.tintColor = .systemBlue
@@ -26,28 +41,30 @@ class Cell: UICollectionViewCell {
         return $0
     }(UIImageView())
     
-    private lazy var imageViewAvatarka: UIImageView = addImageView(radius: 20)
+    private lazy var avatarImageView: UIImageView = UIImageView.addImageView(
+        radius: 20
+    )
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(labelMainTitle)
-        contentView.addSubview(labelDescription)
-        contentView.addSubview(labelPrice)
-        contentView.addSubview(imageViewCheck)
-        contentView.addSubview(imageViewAvatarka)
-        contentView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        contentView.addSubview(mainTitleLabel)
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(priceLabel)
+        contentView.addSubview(checkImageView)
+        contentView.addSubview(avatarImageView)
+        contentView.backgroundColor = AdCell.Constants.lightGray
         contentView.layer.cornerRadius = 10
-        imageViewCheck.isHidden = true
+        checkImageView.isHidden = true
     }
     
-    func setUp(dataForSetUp: CellData, viewWidth: Int) {
-        labelMainTitle.text = dataForSetUp.title
-        labelDescription.text = dataForSetUp.description
-        labelPrice.text = dataForSetUp.price
+    func setUp(dataForSetUp: AdDetails, viewWidth: Int) {
+        mainTitleLabel.text = dataForSetUp.title
+        descriptionLabel.text = dataForSetUp.description
+        priceLabel.text = dataForSetUp.price
         setUpImageViewAvatarka(named: dataForSetUp.icon.x52)
 //        imageViewAvatarka.image = UIImage(named: dataForSetUp.icon.x52)
         setUpConstrains()
-        labelMainTitle.widthAnchor.constraint(equalToConstant: CGFloat(viewWidth - 160)).isActive = true
+        mainTitleLabel.widthAnchor.constraint(equalToConstant: CGFloat(viewWidth - 160)).isActive = true
     }
     
     private func setUpImageViewAvatarka(named name: String) {
@@ -60,7 +77,7 @@ class Cell: UICollectionViewCell {
                 
                 if let data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
-                        self.imageViewAvatarka.image = image
+                        self.avatarImageView.image = image
                     }
                 }
             }.resume()
@@ -68,49 +85,59 @@ class Cell: UICollectionViewCell {
     }
     
     func hiddenImageViewCheck() {
-        imageViewCheck.isHidden = !(imageViewCheck.isHidden)
+        checkImageView.isHidden = !(checkImageView.isHidden)
     }
     
     func showImageViewCheck() {
-        imageViewCheck.isHidden = false
+        checkImageView.isHidden = false
     }
 
     func hideImageViewCheck() {
-        imageViewCheck.isHidden = true
+        checkImageView.isHidden = true
     }
 
-    
     private func setUpConstrains() {
         NSLayoutConstraint.activate([
             
-            imageViewCheck.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
-            imageViewCheck.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            imageViewCheck.heightAnchor.constraint(equalToConstant: 20),
-            imageViewCheck.widthAnchor.constraint(equalToConstant: 20),
+            checkImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
+            checkImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            checkImageView.heightAnchor.constraint(equalToConstant: 20),
+            checkImageView.widthAnchor.constraint(equalToConstant: 20),
             
-            imageViewAvatarka.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            imageViewAvatarka.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            imageViewAvatarka.heightAnchor.constraint(equalToConstant: 50),
-            imageViewAvatarka.widthAnchor.constraint(equalToConstant: 50),
+            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 50),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 50),
             
-            labelMainTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
-            labelMainTitle.leadingAnchor.constraint(equalTo: imageViewAvatarka.trailingAnchor, constant: 10),
-            labelMainTitle.heightAnchor.constraint(equalToConstant: 25),
-            labelMainTitle.trailingAnchor.constraint(equalTo: imageViewCheck.leadingAnchor, constant: -10),
+            mainTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
+            mainTitleLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 10),
+            mainTitleLabel.heightAnchor.constraint(equalToConstant: 25),
+            mainTitleLabel.trailingAnchor.constraint(equalTo: checkImageView.leadingAnchor, constant: -10),
             
-            labelPrice.leadingAnchor.constraint(equalTo: imageViewAvatarka.trailingAnchor, constant: 10),
-            labelPrice.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
-            labelPrice.heightAnchor.constraint(equalToConstant: 20),
-            labelPrice.trailingAnchor.constraint(equalTo: imageViewCheck.leadingAnchor, constant: -10),
+            priceLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 10),
+            priceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+            priceLabel.heightAnchor.constraint(equalToConstant: 20),
+            priceLabel.trailingAnchor.constraint(equalTo: checkImageView.leadingAnchor, constant: -10),
             
-            labelDescription.topAnchor.constraint(equalTo: labelMainTitle.bottomAnchor, constant: 5),
-            labelDescription.leadingAnchor.constraint(equalTo: imageViewAvatarka.trailingAnchor, constant: 10),
-            labelDescription.trailingAnchor.constraint(equalTo: imageViewCheck.leadingAnchor, constant: -10),
-            labelDescription.bottomAnchor.constraint(equalTo: labelPrice.topAnchor, constant: -10)
+            descriptionLabel.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 5),
+            descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 10),
+            descriptionLabel.trailingAnchor.constraint(equalTo: checkImageView.leadingAnchor, constant: -10),
+            descriptionLabel.bottomAnchor.constraint(equalTo: priceLabel.topAnchor, constant: -10)
         ])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension AdCell {
+    enum Constants {
+        static let cellIdentifier = "AdCell"
+        static let lightGray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        static let fontLabelMainTitle = UIFont.systemFont(ofSize: 23, weight: .bold)
+        static let fontLabelDescription = UIFont.systemFont(ofSize: 16)
+        static let emptyString = ""
+        static let fontLabelPrice = UIFont.systemFont(ofSize: 18, weight: .bold)
     }
 }

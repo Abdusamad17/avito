@@ -6,16 +6,16 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.identifier, for: indexPath) as? Cell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdCell.Constants.cellIdentifier, for: indexPath) as? AdCell else {
             return UICollectionViewCell()
         }
         
-        cell.setUp(dataForSetUp: dataForShow?[indexPath.item] ?? CellData(id: "", title: "", description: "", icon: Icon(x52: ""), price: "", isSelected: false), viewWidth: Int(view.frame.width))
+        cell.setUp(dataForSetUp: dataForShow?[indexPath.item] ?? AdDetails(id: "", title: "", description: "", icon: AdIcon(x52: ""), price: "", isSelected: false), viewWidth: Int(view.frame.width))
         
         if indexPath == selectedIndex {
             cell.showImageViewCheck()
-            selectedIndexLabelMainTitle = cell.getLabelMainTitle()
-            selectedIndexLabelDescription = cell.getLabelDescription()
+            selectedIndexLabelMainTitle = cell.mainTitleLabel.text
+            selectedIndexLabelDescription = cell.descriptionLabel.text
         } else {
             cell.hideImageViewCheck()
         }
